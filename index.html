@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Travel Company - Voucher Generator</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Times+New+Roman:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <!-- USER FORM -->
+    <div class="user-layout">
+        <header class="app-header">
+            <h1>Travel Voucher Generator</h1>
+            <p>Fill in the details below. Additional Policies are added automatically.</p>
+        </header>
+
+        <form id="voucherForm" class="clean-form" onsubmit="event.preventDefault();">
+
+            <div class="flex-container">
+                <div class="form-column">
+                    <h3><span class="icon">🏢</span> Company Details</h3>
+                    <div class="group"><label>Company Name</label><input type="text" id="in_companyName"
+                            value="MY TRAVEL COMPANY"></div>
+                    <div class="group"><label>Phone</label><input type="text" id="in_companyPhone" value="9560014990">
+                    </div>
+                    <div class="group"><label>Address 1</label><input type="text" id="in_companyAddr1"
+                            value="101,first floor,South point mall,Golf Course road,"></div>
+                    <div class="group"><label>Address 2</label><input type="text" id="in_companyAddr2"
+                            value="Gurugram, Gurugram Haryana, 122002"></div>
+                </div>
+
+                <div class="form-column">
+                    <h3><span class="icon">📝</span> Reference Info</h3>
+                    <div class="group"><label>R PNR</label><input type="text" id="in_pnr" value="H04HA0062"></div>
+                    <div class="group"><label>Issued On</label><input type="datetime-local" id="in_issued"
+                            value="2026-01-04T13:50"></div>
+                    <div class="group"><label>Ref ID</label><input type="text" id="in_refId" value="TNHAPI00242551">
+                    </div>
+                    <div class="group"><label>Supplier Conf</label><input type="text" id="in_supConf"
+                            placeholder="(Optional)"></div>
+                </div>
+            </div>
+
+            <div class="flex-container">
+                <div class="form-column">
+                    <h3><span class="icon">🏨</span> Hotel Details</h3>
+                    <div class="group"><label>Hotel Name</label><input type="text" id="in_hotelName"
+                            value="Home Hotel Aurora"></div>
+                    <div class="group"><label>Address</label><input type="text" id="in_hotelAddr"
+                            value="Sjogata 19-21, Tromso, Norway"></div>
+                    <div class="group"><label>Contact</label><input type="text" id="in_hotelContact"
+                            value="+4777-781100"></div>
+                    <div class="group"><label>City</label><input type="text" id="in_hotelCity" value="Tromso, Norway">
+                    </div>
+                    <div class="group"><label>Rooms</label><input type="number" id="in_rooms" value="2"></div>
+                    <div class="group full"><label>Desc</label><textarea id="in_roomDesc"
+                            rows="2">Standard-Half Board-Refundable Rate|Standard-Half Board-Refundable Rate</textarea>
+                    </div>
+                </div>
+
+                <div class="form-column">
+                    <h3><span class="icon">📅</span> Stay Dates</h3>
+                    <div class="group"><label>Check-in</label><input type="datetime-local" id="in_checkIn"
+                            value="2026-01-05T14:00"></div>
+                    <div class="group"><label>Check-out</label><input type="datetime-local" id="in_checkOut"
+                            value="2026-01-08T12:00"></div>
+                    <div class="group"><label>Nights</label><input type="number" id="in_nights" value="3"></div>
+                </div>
+            </div>
+
+            <div class="guest-input-section">
+                <div class="guest-header-flex">
+                    <h3><span class="icon">👥</span> Guest Details</h3>
+                    <button type="button" class="btn-add-guest" onclick="addGuest()">+ Add Guest</button>
+                </div>
+
+                <div id="guest-cards-container" class="guest-cards-grid">
+                    <!-- Default Guest 1 -->
+                    <div class="guest-mini-card">
+                        <h4>Guest 1 <span class="remove-guest"
+                                onclick="this.parentElement.parentElement.remove();">✕</span></h4>
+                        <input type="text" class="g-name" placeholder="Name" value="Mrs.AKANSHA MITTAL">
+                        <input type="text" class="g-type" placeholder="Room Type"
+                            value="Standard-Half Board-Refundable Rate">
+                        <div class="flex-row">
+                            <input type="text" class="g-inc" placeholder="Inclusion" value="HalfBoard">
+                            <input type="text" class="g-pax" placeholder="Pax" value="Adult">
+                        </div>
+                        <input type="text" class="g-status" placeholder="Status" value="CONFIRMED">
+                        <input type="text" class="g-conf" placeholder="Conf No">
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button type="button" class="btn-generate-main" onclick="generatePDF()">Generate Voucher PDF</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- HIDDEN TEMPLATE -->
+    <div style="display: none;">
+        <div id="base-template" class="voucher-paper">
+            <!-- Simplified HTML Structure -->
+            <div class="v-header">
+                <div class="v-company-center">
+                    <div class="v-company-name" id="tmpl_companyName"></div>
+                    <div class="v-text" id="tmpl_companyPhone"></div>
+                    <div class="v-text" id="tmpl_companyAddr"></div>
+                </div>
+                <div class="v-header-right">
+                    <div class="v-info-row"><strong>R PNR : </strong><span id="tmpl_pnr"></span></div>
+                    <div class="v-info-row"><strong>Issued On :</strong><span id="tmpl_issued"></span></div>
+                </div>
+            </div>
+
+            <table class="v-ref-bar">
+                <tr>
+                    <td class="v-ref-left"><strong>Reference ID : </strong><span id="tmpl_refId"></span></td>
+                    <td class="v-ref-right"><strong>Supplier Confirmation No : </strong><span id="tmpl_supConf"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="v-table">
+                <thead>
+                    <tr>
+                        <th style="width: 45%; text-align: left; padding-left: 10px;">Hotel Details</th>
+                        <th style="width: 35%;">Room Type</th>
+                        <th style="width: 20%;">No of Rooms</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="v-hotel-info">
+                            <div class="v-hotel-row"><span class="v-label">Hotel Name</span><span>:</span><span
+                                    class="v-val" id="tmpl_hotelName"></span></div>
+                            <div class="v-hotel-row"><span class="v-label">Hotel Address</span><span>:</span><span
+                                    class="v-val" id="tmpl_hotelAddr"></span></div>
+                            <div class="v-hotel-row"><span class="v-label">Hotel Contact No</span><span>:</span><span
+                                    class="v-val" id="tmpl_hotelContact"></span></div>
+                            <div class="v-hotel-row"><span class="v-label">City</span><span>:</span><span class="v-val"
+                                    id="tmpl_hotelCity"></span></div>
+                            <div class="v-hotel-row"><span class="v-label">Hotel Country</span><span>:</span><span
+                                    class="v-val">Norway</span></div>
+                        </td>
+                        <td style="text-align: center; vertical-align: middle;" id="tmpl_roomDesc"></td>
+                        <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                            <span id="tmpl_rooms"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="v-dates-box">
+                <tr>
+                    <th style="width: 40%;">CHECK-IN</th>
+                    <th style="width: 20%; border-bottom: none;"></th>
+                    <th style="width: 40%;">CHECK-OUT</th>
+                </tr>
+                <tr>
+                    <td class="v-date-val" id="tmpl_checkIn"></td>
+                    <td class="v-night-val">
+                        <span style="font-size: 20px;">🕒</span> <strong id="tmpl_nights"></strong>
+                        <strong>Night(s)</strong>
+                    </td>
+                    <td class="v-date-val" id="tmpl_checkOut"></td>
+                </tr>
+            </table>
+
+            <div class="v-guest-header">Guest Details</div>
+            <table class="v-guest-table">
+                <thead>
+                    <tr>
+                        <th>Guest Name</th>
+                        <th>Room Type</th>
+                        <th>Room Inclusion</th>
+                        <th>Room Confirmation</th>
+                        <th>Pax Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tmpl_guestList">
+                    <!-- Dynamic -->
+                </tbody>
+            </table>
+
+            <!-- TERMS AND CONDITIONS SECTION -->
+            <div class="v-terms-box">
+                <div class="v-terms-header">Terms And Conditions</div>
+                <ul class="v-terms-list">
+                    <li>Hotels may charge a security deposit at the time of check in, which will be refundable if
+                        unutilized.</li>
+                    <li>Check in & Check out time is for information purposes and may change without intimation.</li>
+                    <li>Early Check in and Late check out are subject to availability and as per Hotel Policy.</li>
+                    <li>Carrying valid ID proof and Voucher copy is recommended.</li>
+                    <li>Any Supplementary charges / Gala Dinner / City Tax etc. to be paid directly at the property.
+                    </li>
+                    <li>Bedding type is subject to availability at the time of check in.</li>
+                    <li>Extra beds are not included in the reservation price unless stated in the hotel / booking
+                        policies.</li>
+                    <li>Hotels may not allow any additional passenger apart from those reflecting in the booking.</li>
+                    <li>Special Requests are subject to availability and cannot be pre confirmed / guaranteed.</li>
+                    <li>Hotels may deny check in or charge a different amount if the nationality is different than
+                        mentioned at the time of reservation.</li>
+                    <li>To avail any complementary service, guests need to contact the hotel directly. Hotel reserves
+                        the rights to accept, deny or withdraw the same.</li>
+                </ul>
+            </div>
+
+            <!-- ADDITIONAL CHARGES & FOOTER -->
+            <div class="v-additional-box">
+                <div class="v-add-title">Additional Charges</div>
+                <div class="v-add-note">Note: This Charges Are Payable At Property</div>
+                <ul class="v-add-list">
+                    <li>* Please Note: Since The Bedding Type Is Not Specified, The Available Options Will Default To
+                        Queen Bed Or Twin Bed.</li>
+                    <li>* Extra Person / Extra Bed Charges May Apply And Vary Depending On Property Policy , Incase Of
+                        Any Charges For Extra Person/Bed Guests Will Have To Pay At The Time Of Check-In.</li>
+                    <li>* Please Note, The Charges Like Resort Fees, Tourism Fees, City Tax, Parking, And Gratuities
+                        Need To Be Paid By The Guest At The Time Of Check-In If Applicable.</li>
+                    <li>* Cancelled And Rebooked Reservations Will Be Rejected, Regardless Of The Source Reported To The
+                        Hotel</li>
+                    <li>* Any Special Request For Bed Type, Early Check In, Late Check Out, Smoking Rooms, Etc Are Not
+                        Guaranteed As Subject To Availability At The Time Of Check In.</li>
+                    <li>* Early Check Out Will/May Attract Full Cancellation Charges Unless Otherwise Specified.</li>
+                    <li>* Child Policy - Child 0 - ??15.99 Years Old May Share A Room With Utilizing Existing Room
+                        Bedding And Complimentary Breakfast.</li>
+                    <li>* Guests Must Be Over 18 Years Of Age To Check-In To This Hotel.</li>
+                    <li>* As Per Government Regulations, It Is Mandatory For All Guests Above 18 Years Of Age To Carry A
+                        Valid Photo Identity Card & Address Proof At The Time Of Check-In. In Case, Check-In Is Denied
+                        By The Hotel(S) Due To Lack Of Required Documents, You Cannot Claim For The Refund & The Booking
+                        Will Be Considered As NO SHOW.</li>
+                    <li>* The Standard Check-In And Check-Out Times Are 12 Noon. Early Check-In Or Late Check-Out Is
+                        Subject To Hotel Availability And May Also Be Chargeable By The Hotel. Any Early Check-In Or
+                        Late Check-Out Request Must Be Directed To And Reconfirmed With The Hotel Directly.</li>
+                    <li>* Failure To Check-In To The Hotel, Will Attract The Full Cost Of Stay Or Penalty As Per The
+                        Hotel Cancellation Policy. 8 Hotels Charge A Compulsory Gala Dinner Supplement During Christmas,
+                        New Year"S Eve Or Other Special Events And Festivals Like Diwali Or Dussehra. These Additional
+                        Charges Are Not Included In The Booking Amount And Will Be Collected Directly At The Hotel.</li>
+                    <li>* There Might Be Seasonal Variation In Hotel Tariff Rates During Peak Days, For Example URS
+                        Period In Ajmer Or Lord Jagannath Rath Yatra In Puri, The Room Tariff Differences If Any Will
+                        Have To Be Borne And Paid By The Customer Directly At The Hotel, If The Booking Stay Period
+                        Falls During Such Dates.</li>
+                    <li>* All Additional Charges Other Than The Room Charges And Inclusions As Mentioned In The Booking
+                        Voucher Are To Be Borne And Paid Separately During Check-Out. Please Make Sure That You Are
+                        Aware Of All Such Charges That May Come As Extras. Some Of Them Can Be WiFi Costs, Mini Bar,
+                        Laundry Expenses, Telephone Calls, Room Service, Snacks Etc.</li>
+                    <li>* Some Hotels May Have Policies That Do Not Allow Unmarried / Unrelated Couples Or Certain
+                        Foreign Nationalities To Check-In</li>
+                    <li>* If Airport Shuttle/Speed Boat Transfers Are Included, Request To Share Flight Details 24 Hours
+                        Prior To Check-In To Confirm The Transfers.</li>
+                    <li>* For GCC Resort Bookings, Guest Flight Details And Passport Copies Are Required For HCN Update.
+                    </li>
+                    <li>* Please Note That The Hotel Reserves The Right To Deny Check -In If All Guest Names Are Not
+                        Provided In Advance.No Refund Will Be Provided In Such Cases.</li>
+                </ul>
+            </div>
+
+            <!-- ROOMS DESCRIPTION BOX -->
+            <div class="v-room-desc-box">
+                <div class="v-rdesc-header">Rooms Description</div>
+                <div class="v-rdesc-content">
+                    TWIN ROOM - HALF BOARD STANDARD-HALF BOARD-REFUNDABLE RATE
+                </div>
+            </div>
+
+            <!-- SERVICE CHARGE FOOTER -->
+            <div class="v-footer-service">
+                * Service charges apply
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
