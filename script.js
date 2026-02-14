@@ -21,12 +21,12 @@ function addGuest() {
     div.innerHTML = `
         <h4>Guest ${guestCount} <span class="remove-guest" onclick="this.parentElement.parentElement.remove();">✕</span></h4>
         <input type="text" class="g-name" placeholder="Name">
-        <input type="text" class="g-type" placeholder="Room Type" value="Standard-Half Board-Refundable Rate">
+        <input type="text" class="g-type" placeholder="Room Type">
         <div class="flex-row">
-            <input type="text" class="g-inc" placeholder="Inclusion" value="HalfBoard">
-            <input type="text" class="g-pax" placeholder="Pax" value="Adult">
+            <input type="text" class="g-inc" placeholder="Inclusion">
+            <input type="text" class="g-pax" placeholder="Pax">
         </div>
-        <input type="text" class="g-status" placeholder="Status" value="CONFIRMED">
+        <input type="text" class="g-status" placeholder="Status">
         <input type="text" class="g-conf" placeholder="Conf No">
     `;
     container.appendChild(div);
@@ -71,18 +71,18 @@ function generatePDF() {
     const getVal = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
     const setTxt = (sel, val) => { const el = clone.querySelector(sel); if (el) el.textContent = val || ''; };
 
-    setTxt('#tmpl_companyName', getVal('in_companyName'));
+
     setTxt('#tmpl_companyPhone', getVal('in_companyPhone'));
 
-    const addr1 = getVal('in_companyAddr1');
-    const addr2 = getVal('in_companyAddr2');
+    const addr = getVal('in_companyAddr');
     const addrEl = clone.querySelector('#tmpl_companyAddr');
-    if (addrEl) addrEl.innerHTML = addr1 + "<br>" + addr2;
+    if (addrEl) addrEl.innerText = addr;
 
     setTxt('#tmpl_pnr', getVal('in_pnr'));
     setTxt('#tmpl_issued', formatDate(getVal('in_issued')) + ":38");
     setTxt('#tmpl_refId', getVal('in_refId'));
     setTxt('#tmpl_supConf', getVal('in_supConf'));
+    setTxt('#tmpl_emergencyContact', getVal('in_emergencyContact'));
 
     setTxt('#tmpl_hotelName', getVal('in_hotelName'));
     setTxt('#tmpl_hotelAddr', getVal('in_hotelAddr'));
@@ -91,6 +91,16 @@ function generatePDF() {
 
     const roomEl = clone.querySelector('#tmpl_roomDesc');
     if (roomEl) roomEl.innerHTML = getVal('in_roomDesc').replace(/\|/g, '<br>');
+
+    const linkUrl = getVal('in_locationLink');
+    const linkEl = clone.querySelector('#tmpl_locationLink');
+    if (linkEl) {
+        if (linkUrl) {
+            linkEl.innerHTML = `<a href="${linkUrl}" target="_blank" style="color: blue; text-decoration: underline;">${linkUrl}</a>`;
+        } else {
+            linkEl.textContent = '';
+        }
+    }
 
     setTxt('#tmpl_rooms', getVal('in_rooms'));
     setTxt('#tmpl_checkIn', formatDate(getVal('in_checkIn')));
@@ -115,6 +125,7 @@ function generatePDF() {
             tr.innerHTML = `<td>${name}</td><td>${type}</td><td>${inc}</td><td>${conf}</td><td>${pax}</td><td>${status}</td>`;
             guestList.appendChild(tr);
         });
+        setTxt('#tmpl_guestCount', cards.length);
     }
 
     // 4. Append to Overlay, Overlay to Body
@@ -147,3 +158,27 @@ function generatePDF() {
         document.body.removeChild(overlay);
     });
 }
+
+
+const checkInInput = document.getElementById('in_checkIn');
+const checkOutInput = document.getElementById('in_checkOut');
+const nightsInput = document.getElementById('in_nights');
+
+function calculateNights() {
+    const checkInDate = new Date(checkInInput.value);
+    const checkOutDate = new Date(checkOutInput.value);
+
+    // Check karte hain ki dono dates valid hain ya nahi
+    if (checkInDate && checkOutDate && checkOutDate > checkInDate) {
+        const timeDiff = checkOutDate - checkInDate;
+        // Milliseconds ko days mein convert karna
+        const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+        nightsInput.value = days;
+    } else {
+        nightsInput.value = 0;
+    }
+}
+
+// Event listeners: jab bhi date change hogi, function run karega
+checkInInput.addEventListener('change', calculateNights);
+checkOutInput.addEventListener('change', calculateNights);
