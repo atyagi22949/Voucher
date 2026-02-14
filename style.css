@@ -44,6 +44,7 @@ body {
     padding: 15px;
     border-radius: 6px;
     border: 1px solid #e9ecef;
+
 }
 
 h3 {
@@ -180,8 +181,10 @@ input:focus {
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    height: 35mm;
+    height: 50mm;
 }
+
+/* .v-header-left removed */
 
 .v-company-center {
     text-align: center;
@@ -383,12 +386,14 @@ input:focus {
 /* Additional Charges Style */
 .v-additional-box {
     margin-top: 20px;
-    border: 1px solid #bbb;      /* border added like terms box */
+    border: 1px solid #bbb;
+    /* border added like terms box */
     font-family: 'Times New Roman', serif;
     font-size: 9pt;
     color: #000;
     page-break-inside: avoid;
-    padding: 0;                  /* remove loose spacing */
+    padding: 0;
+    /* remove loose spacing */
 }
 
 /* Header like terms section */
@@ -419,29 +424,6 @@ input:focus {
     margin-bottom: 4px;
     padding-left: 10px;
     text-indent: -10px;
-}
-
-
-/* Room Desc Box at bottom */
-.v-room-desc-box {
-    margin-top: 20px;
-    border: 1px solid #bbb;
-    background: #f9f9f9;
-    /* Light grey per screenshot */
-}
-
-.v-rdesc-header {
-    background: #e0e0e0;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-bottom: 1px solid #bbb;
-    font-size: 9pt;
-}
-
-.v-rdesc-content {
-    padding: 10px;
-    text-transform: uppercase;
-    font-size: 9pt;
 }
 
 /* Footer */
