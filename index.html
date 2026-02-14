@@ -17,6 +17,7 @@
     <!-- USER FORM -->
     <div class="user-layout">
         <header class="app-header">
+            <img src="logo.png" alt="Logo" style="max-height: 80px; display: block; margin: 0 auto 10px;">
             <h1>Travel Voucher Generator</h1>
             <p>Fill in the details below. Additional Policies are added automatically.</p>
         </header>
@@ -26,53 +27,50 @@
             <div class="flex-container">
                 <div class="form-column">
                     <h3><span class="icon">🏢</span> Company Details</h3>
-                    <div class="group"><label>Company Name</label><input type="text" id="in_companyName"
-                            value="MY TRAVEL COMPANY"></div>
-                    <div class="group"><label>Phone</label><input type="text" id="in_companyPhone" value="9560014990">
+
+                    <div class="group"><label>Phone</label><input type="text" id="in_companyPhone" value="9560014990"
+                            readonly>
                     </div>
-                    <div class="group"><label>Address 1</label><input type="text" id="in_companyAddr1"
-                            value="101,first floor,South point mall,Golf Course road,"></div>
-                    <div class="group"><label>Address 2</label><input type="text" id="in_companyAddr2"
-                            value="Gurugram, Gurugram Haryana, 122002"></div>
+                    <div class="group"><label>Address </label><input type="text" id="in_companyAddr"
+                            value="08 GF, Augusta Point, Golf Course Road DLF5, Sector 53 Gurugram Haryana." readonly>
+                    </div>
+
                 </div>
 
                 <div class="form-column">
                     <h3><span class="icon">📝</span> Reference Info</h3>
-                    <div class="group"><label>R PNR</label><input type="text" id="in_pnr" value="H04HA0062"></div>
-                    <div class="group"><label>Issued On</label><input type="datetime-local" id="in_issued"
-                            value="2026-01-04T13:50"></div>
-                    <div class="group"><label>Ref ID</label><input type="text" id="in_refId" value="TNHAPI00242551">
+                    <div class="group"><label>R PNR</label><input type="text" id="in_pnr"></div>
+
+                    <div class="group"><label>Ref ID</label><input type="text" id="in_refId">
                     </div>
                     <div class="group"><label>Supplier Conf</label><input type="text" id="in_supConf"
                             placeholder="(Optional)"></div>
+                    <div class="group"><label>Emergency Contact</label><input type="text" id="in_emergencyContact">
+                    </div>
                 </div>
             </div>
 
             <div class="flex-container">
                 <div class="form-column">
                     <h3><span class="icon">🏨</span> Hotel Details</h3>
-                    <div class="group"><label>Hotel Name</label><input type="text" id="in_hotelName"
-                            value="Home Hotel Aurora"></div>
-                    <div class="group"><label>Address</label><input type="text" id="in_hotelAddr"
-                            value="Sjogata 19-21, Tromso, Norway"></div>
-                    <div class="group"><label>Contact</label><input type="text" id="in_hotelContact"
-                            value="+4777-781100"></div>
-                    <div class="group"><label>City</label><input type="text" id="in_hotelCity" value="Tromso, Norway">
+                    <div class="group"><label>Hotel Name</label><input type="text" id="in_hotelName"></div>
+                    <div class="group"><label>Address</label><input type="text" id="in_hotelAddr"></div>
+                    <div class="group"><label>Contact</label><input type="text" id="in_hotelContact"></div>
+                    <div class="group"><label>City</label><input type="text" id="in_hotelCity">
                     </div>
-                    <div class="group"><label>Rooms</label><input type="number" id="in_rooms" value="2"></div>
-                    <div class="group full"><label>Desc</label><textarea id="in_roomDesc"
-                            rows="2">Standard-Half Board-Refundable Rate|Standard-Half Board-Refundable Rate</textarea>
+                    <div class="group"><label>Rooms</label><input type="number" id="in_rooms"></div>
+                    <div class="group"><label>Location Link</label><input type="text" id="in_locationLink"></div>
+                    <div class="group full"><label>Desc</label><textarea id="in_roomDesc" rows="2"></textarea>
                     </div>
                 </div>
 
                 <div class="form-column">
                     <h3><span class="icon">📅</span> Stay Dates</h3>
-                    <div class="group"><label>Check-in</label><input type="datetime-local" id="in_checkIn"
-                            value="2026-01-05T14:00"></div>
-                    <div class="group"><label>Check-out</label><input type="datetime-local" id="in_checkOut"
-                            value="2026-01-08T12:00"></div>
-                    <div class="group"><label>Nights</label><input type="number" id="in_nights" value="3"></div>
+                    <div class="group"><label>Check-in</label><input type="datetime-local" id="in_checkIn"></div>
+                    <div class="group"><label>Check-out</label><input type="datetime-local" id="in_checkOut"></div>
+                    <div class="group"><label>Nights</label><input type="number" id="in_nights"></div>
                 </div>
+
             </div>
 
             <div class="guest-input-section">
@@ -86,14 +84,13 @@
                     <div class="guest-mini-card">
                         <h4>Guest 1 <span class="remove-guest"
                                 onclick="this.parentElement.parentElement.remove();">✕</span></h4>
-                        <input type="text" class="g-name" placeholder="Name" value="Mrs.AKANSHA MITTAL">
-                        <input type="text" class="g-type" placeholder="Room Type"
-                            value="Standard-Half Board-Refundable Rate">
+                        <input type="text" class="g-name" placeholder="Name">
+                        <input type="text" class="g-type" placeholder="Room Type">
                         <div class="flex-row">
-                            <input type="text" class="g-inc" placeholder="Inclusion" value="HalfBoard">
-                            <input type="text" class="g-pax" placeholder="Pax" value="Adult">
+                            <input type="text" class="g-inc" placeholder="Inclusion">
+                            <input type="text" class="g-pax" placeholder="Pax">
                         </div>
-                        <input type="text" class="g-status" placeholder="Status" value="CONFIRMED">
+                        <input type="text" class="g-status" placeholder="Status">
                         <input type="text" class="g-conf" placeholder="Conf No">
                     </div>
                 </div>
@@ -111,13 +108,13 @@
             <!-- Simplified HTML Structure -->
             <div class="v-header">
                 <div class="v-company-center">
-                    <div class="v-company-name" id="tmpl_companyName"></div>
+                    <img src="logo.png" alt="Company Logo" style="max-height: 80px; margin-bottom: 5px;">
+
                     <div class="v-text" id="tmpl_companyPhone"></div>
                     <div class="v-text" id="tmpl_companyAddr"></div>
                 </div>
                 <div class="v-header-right">
                     <div class="v-info-row"><strong>R PNR : </strong><span id="tmpl_pnr"></span></div>
-                    <div class="v-info-row"><strong>Issued On :</strong><span id="tmpl_issued"></span></div>
                 </div>
             </div>
 
@@ -127,14 +124,20 @@
                     <td class="v-ref-right"><strong>Supplier Confirmation No : </strong><span id="tmpl_supConf"></span>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2" class="v-ref-left"><strong>Emergency Contact : </strong><span
+                            id="tmpl_emergencyContact"></span></td>
+                </tr>
             </table>
 
             <table class="v-table">
                 <thead>
                     <tr>
-                        <th style="width: 45%; text-align: left; padding-left: 10px;">Hotel Details</th>
-                        <th style="width: 35%;">Room Type</th>
-                        <th style="width: 20%;">No of Rooms</th>
+                    <tr>
+                        <th style="width: 40%; text-align: left; padding-left: 10px;">Hotel Details</th>
+                        <th style="width: 30%;">Room Type</th>
+                        <th style="width: 15%;">No of Rooms</th>
+                        <th style="width: 15%;">No of Guests</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,12 +151,17 @@
                                     class="v-val" id="tmpl_hotelContact"></span></div>
                             <div class="v-hotel-row"><span class="v-label">City</span><span>:</span><span class="v-val"
                                     id="tmpl_hotelCity"></span></div>
+                            <div class="v-hotel-row"><span class="v-label">Location</span><span>:</span><span
+                                    class="v-val" id="tmpl_locationLink"></span></div>
                             <div class="v-hotel-row"><span class="v-label">Hotel Country</span><span>:</span><span
-                                    class="v-val">Norway</span></div>
+                                    class="v-val"></span></div>
                         </td>
                         <td style="text-align: center; vertical-align: middle;" id="tmpl_roomDesc"></td>
                         <td style="text-align: center; vertical-align: middle; font-size: 16px;">
                             <span id="tmpl_rooms"></span>
+                        </td>
+                        <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                            <span id="tmpl_guestCount"></span>
                         </td>
                     </tr>
                 </tbody>
@@ -264,13 +272,7 @@
                 </ul>
             </div>
 
-            <!-- ROOMS DESCRIPTION BOX -->
-            <div class="v-room-desc-box">
-                <div class="v-rdesc-header">Rooms Description</div>
-                <div class="v-rdesc-content">
-                    TWIN ROOM - HALF BOARD STANDARD-HALF BOARD-REFUNDABLE RATE
-                </div>
-            </div>
+
 
             <!-- SERVICE CHARGE FOOTER -->
             <div class="v-footer-service">
