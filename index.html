@@ -28,16 +28,23 @@
                 <div class="form-column">
                     <h3><span class="icon">🏢</span> Company Details</h3>
 
-                    <div class="group"><label>GST no </label><input type="text" id="in_companyAddr">
+                    <div class="group"><label>Phone</label><input type="text" id="in_companyPhone" value="9560014990"
+                            readonly>
+                    </div>
+                    <div class="group"><label>Address </label><input type="text" id="in_companyAddr"
+                            value="08 GF, Augusta Point, Golf Course Road DLF5, Sector 53 Gurugram Haryana." readonly>
                     </div>
 
                 </div>
 
                 <div class="form-column">
                     <h3><span class="icon">📝</span> Reference Info</h3>
+                    <div class="group"><label>R PNR</label><input type="text" id="in_pnr"></div>
 
-                    <div class="group"><label>Confirmation ID</label><input type="text" id="in_refId">
+                    <div class="group"><label>Ref ID</label><input type="text" id="in_refId">
                     </div>
+                    <div class="group"><label>Supplier Conf</label><input type="text" id="in_supConf"
+                            placeholder="(Optional)"></div>
                     <div class="group"><label>Emergency Contact</label><input type="text" id="in_emergencyContact">
                     </div>
                 </div>
@@ -81,10 +88,10 @@
                         <input type="text" class="g-type" placeholder="Room Type">
                         <div class="flex-row">
                             <input type="text" class="g-inc" placeholder="Inclusion">
-                            <input type="text" class="g-Guest" placeholder=" NO guests">
+                            <input type="text" class="g-pax" placeholder="Pax">
                         </div>
                         <input type="text" class="g-status" placeholder="Status">
-                        <input type="text" class="g-Guests" placeholder="Guests">
+                        <input type="text" class="g-conf" placeholder="Conf No">
                     </div>
                 </div>
             </div>
@@ -103,15 +110,18 @@
                 <div class="v-company-center">
                     <img src="logo.png" alt="Company Logo" style="max-height: 80px; margin-bottom: 5px;">
 
+                    <div class="v-text" id="tmpl_companyPhone"></div>
                     <div class="v-text" id="tmpl_companyAddr"></div>
                 </div>
                 <div class="v-header-right">
+                    <div class="v-info-row"><strong>R PNR : </strong><span id="tmpl_pnr"></span></div>
                 </div>
             </div>
 
             <table class="v-ref-bar">
                 <tr>
-                    <td class="v-ref-left"><strong>Confirmation ID : </strong><span id="tmpl_refId"></span></td>
+                    <td class="v-ref-left"><strong>Reference ID : </strong><span id="tmpl_refId"></span></td>
+                    <td class="v-ref-right"><strong>Supplier Confirmation No : </strong><span id="tmpl_supConf"></span>
                     </td>
                 </tr>
                 <tr>
@@ -123,8 +133,11 @@
             <table class="v-table">
                 <thead>
                     <tr>
+                    <tr>
                         <th style="width: 40%; text-align: left; padding-left: 10px;">Hotel Details</th>
-                       
+                        <th style="width: 30%;">Room Type</th>
+                        <th style="width: 15%;">No of Rooms</th>
+                        <th style="width: 15%;">No of Guests</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,7 +156,13 @@
                             <div class="v-hotel-row"><span class="v-label">Hotel Country</span><span>:</span><span
                                     class="v-val"></span></div>
                         </td>
-                       
+                        <td style="text-align: center; vertical-align: middle;" id="tmpl_roomDesc"></td>
+                        <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                            <span id="tmpl_rooms"></span>
+                        </td>
+                        <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                            <span id="tmpl_guestCount"></span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -172,8 +191,8 @@
                         <th>Room Type</th>
                         <th>Room Inclusion</th>
                         <th>Room Confirmation</th>
-                        <th> Guest NO</th>
-                        <th> Guests</th>
+                        <th>Pax Type</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="tmpl_guestList">
